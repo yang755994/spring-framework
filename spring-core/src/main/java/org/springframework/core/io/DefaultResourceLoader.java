@@ -48,6 +48,7 @@ public class DefaultResourceLoader implements ResourceLoader {
 
 	private ClassLoader classLoader;
 
+	// 协议解析器集合
 	private final Set<ProtocolResolver> protocolResolvers = new LinkedHashSet<>(4);
 
 	private final Map<Class<?>, Map<Resource, ?>> resourceCaches = new ConcurrentHashMap<>(4);
@@ -149,20 +150,20 @@ public class DefaultResourceLoader implements ResourceLoader {
 		}
 
 		if (location.startsWith("/")) {
-			return getResourceByPath(location);
+			return getResourceByPath(location);  // 根据路径获取资源信息
 		}
-		else if (location.startsWith(CLASSPATH_URL_PREFIX)) {
+		else if (location.startsWith(CLASSPATH_URL_PREFIX)) {  // 如果path是以classpath:开头
 			return new ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), getClassLoader());
 		}
 		else {
 			try {
 				// Try to parse the location as a URL...
-				URL url = new URL(location);
+				URL url = new URL(location);  // 解析url
 				return new UrlResource(url);
 			}
 			catch (MalformedURLException ex) {
 				// No URL -> resolve as resource path.
-				return getResourceByPath(location);
+				return getResourceByPath(location);  // 如果url解析报错，则转为普通path处理
 			}
 		}
 	}

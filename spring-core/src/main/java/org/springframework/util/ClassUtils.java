@@ -156,8 +156,8 @@ public abstract class ClassUtils {
 	 * @see Thread#getContextClassLoader()
 	 * @see ClassLoader#getSystemClassLoader()
 	 */
-	@Nullable
-	public static ClassLoader getDefaultClassLoader() {
+	@Nullable    //@Nullable: null object
+	public static ClassLoader getDefaultClassLoader() {  // 获取默认的装载器
 		ClassLoader cl = null;
 		try {
 			cl = Thread.currentThread().getContextClassLoader();
